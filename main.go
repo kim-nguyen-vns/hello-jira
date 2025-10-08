@@ -50,7 +50,7 @@ func main() {
 	handledEvents := make(map[string]bool) // to avoid logging the same event multiple times
 
 	for _, ie := range cal.Events() {
-		event := ToEvent(ie)
+		event := ToEvent(ie, pDate)
 		if event == nil { // invalid event
 			continue
 		}

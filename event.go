@@ -1,6 +1,7 @@
 package main
 
 import (
+	"fmt"
 	"log"
 	"strings"
 	"time"
@@ -29,8 +30,8 @@ type Event struct {
 	RR        *rrule.RRule
 }
 
-func ToEvent(ie *ical.VEvent) *Event {
-	title := title(ie)
+func ToEvent(ie *ical.VEvent, date time.Time) *Event {
+	title := fmt.Sprintf("%s - %s", title(ie), date.Format(time.DateOnly))
 	et := toEventType(ie)
 	if len(title) == 0 || isCanceledEvent(ie) || et == EventTypeUnknown {
 		return nil
