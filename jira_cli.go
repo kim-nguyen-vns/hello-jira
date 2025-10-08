@@ -3,6 +3,7 @@ package main
 import (
 	"fmt"
 	"net/http"
+	"time"
 
 	"github.com/andygrunwald/go-jira"
 )
@@ -36,11 +37,12 @@ func NewJiraClient(cfg *Config) (*JiraClient, error) {
 	return &JiraClient{cli: client, cfg: cfg, logged: logged}, nil
 }
 
-func (j *JiraClient) LogWork(event *Event) error {
+func (j *JiraClient) LogWork(event *Event, date time.Time) error {
+	time := replaceTime(date, event.StartTime)
 	_, _, err := j.cli.Issue.AddWorklogRecord(j.cfg.EventTypeToTicketID()[event.Type], &jira.WorklogRecord{
 		Comment:   event.Title,
 		TimeSpent: fmt.Sprintf("%vm", event.EndTime.Sub(event.StartTime).Minutes()),
-		Started:   (*jira.Time)(&event.StartTime),
+		Started:   (*jira.Time)(&time),
 	})
 
 	return err

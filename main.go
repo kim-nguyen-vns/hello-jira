@@ -64,7 +64,7 @@ func main() {
 			continue
 		}
 
-		if err := jiraClient.LogWork(event); err != nil {
+		if err := jiraClient.LogWork(event, pDate); err != nil {
 			log.Printf("Error logging work for event %s: %s", event.Title, err)
 			continue
 		}

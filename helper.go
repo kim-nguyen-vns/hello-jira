@@ -7,3 +7,11 @@ func isSameDate(t1, t2 time.Time) bool {
 	y2, m2, d2 := t2.Date()
 	return y1 == y2 && m1 == m2 && d1 == d2
 }
+
+func replaceTime(datePart, timePart time.Time) time.Time {
+	return time.Date(
+		datePart.Year(), datePart.Month(), datePart.Day(),
+		timePart.Hour(), timePart.Minute(), timePart.Second(), timePart.Nanosecond(),
+		datePart.Location(),
+	)
+}
