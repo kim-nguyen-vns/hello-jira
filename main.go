@@ -10,10 +10,20 @@ import (
 
 func main() {
 	envPath := flag.String("env", "", "Path to .env file (required)")
+	date := flag.String("date", "", "Date to log works for (format: YYYY-MM-DD) (required)")
 	flag.Parse()
 
 	if len(*envPath) == 0 {
-		log.Fatalf("Error: env path is required")
+		log.Fatalln("Error: env path is required")
+	}
+
+	if len(*date) == 0 {
+		log.Fatalln("Error: date is required")
+	}
+
+	pDate, err := time.Parse(time.DateOnly, *date)
+	if err != nil {
+		log.Fatalf("Error parsing date: %s", err)
 	}
 
 	log.Println("Log works started...")
@@ -34,8 +44,7 @@ func main() {
 		log.Fatalf("Error parsing calendar: %s", err)
 	}
 
-	now := time.Now()
-	startOfDay := time.Date(now.Year(), now.Month(), now.Day(), 0, 0, 0, 0, time.Local)
+	startOfDay := time.Date(pDate.Year(), pDate.Month(), pDate.Day(), 0, 0, 0, 0, time.Local)
 	endOfDay := startOfDay.Add(24 * time.Hour)
 
 	handledEvents := make(map[string]bool) // to avoid logging the same event multiple times
@@ -46,7 +55,7 @@ func main() {
 			continue
 		}
 
-		if (event.RR == nil && !isSameDate(event.StartTime, now)) ||
+		if (event.RR == nil && !isSameDate(event.StartTime, pDate)) ||
 			(event.RR != nil && len(event.RR.Between(startOfDay, endOfDay, true)) == 0) { // event not occurring today
 			continue
 		}
