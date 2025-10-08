@@ -12,7 +12,7 @@ Hello Jira is a tool that automatically pulls events from `.ics` calendar url an
 
 1. **Install with Go:**
     ```bash
-    go install github.com/kim-nguyen-vns/hello-jira@latest
+    go install github.com/kim-nguyen-vns/hello-jira
     ```
 
 ## Usage
