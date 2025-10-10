@@ -24,16 +24,16 @@ jobs:
 
       - name: Run CLI
         env:
-          TZ: 'Asia/Ho_Chi_Minh'  # ensures local time if CLI uses system time
+          TZ: Asia/Ho_Chi_Minh  # ensures local time if CLI uses system time
 
-          JIRA_URL: {{ secrets.JIRA_URL }}
-          JIRA_EMAIL: {{ secrets.JIRA_EMAIL }}
-          JIRA_API_TOKEN: {{ secrets.JIRA_API_TOKEN }}
+          JIRA_URL: ${{ secrets.JIRA_URL }}
+          JIRA_EMAIL: ${{ secrets.JIRA_EMAIL }}
+          JIRA_API_TOKEN: ${{ secrets.JIRA_API_TOKEN }}
 
-          ICAL_URL: {{ secrets.ICAL_URL }}
+          ICAL_URL: ${{ secrets.ICAL_URL }}
 
-          GROOMING_ID: {{ secrets.GROOMING_ID }}
-          PLANNING_ID: {{ secrets.PLANNING_ID }}
-          REVIEW_ID: {{ secrets.REVIEW_ID }}
-          DAILY_ID: {{ secrets.DAILY_ID }}
+          GROOMING_ID: ${{ secrets.GROOMING_ID }}
+          PLANNING_ID: ${{ secrets.PLANNING_ID }}
+          REVIEW_ID: ${{ secrets.REVIEW_ID }}
+          DAILY_ID: ${{ secrets.DAILY_ID }}
         run: ./hello-jira
