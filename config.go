@@ -4,7 +4,6 @@ import (
 	"context"
 	"fmt"
 
-	"github.com/joho/godotenv"
 	"github.com/sethvargo/go-envconfig"
 )
 
@@ -21,13 +20,8 @@ type Config struct {
 	DailyID      string `env:"DAILY_ID"`
 }
 
-func loadConfig(path string) (*Config, error) {
+func loadConfig() (*Config, error) {
 	ctx := context.Background()
-
-	if err := godotenv.Load(path); err != nil {
-		return nil, fmt.Errorf("error loading .env file: %w", err)
-	}
-
 	var c Config
 	if err := envconfig.Process(ctx, &c); err != nil {
 		return nil, fmt.Errorf("error processing env config: %w", err)

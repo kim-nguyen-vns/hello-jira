@@ -1,0 +1,39 @@
+name: Daily Run (Go CLI, Weekdays Only)
+
+on:
+  schedule:
+    # Run Monday–Friday at 18:00 UTC+7 → 11:00 UTC
+    - cron: '0 11 * * 1-5'
+  workflow_dispatch: # Allow manual trigger
+
+jobs:
+  run-cli:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Go
+        uses: actions/setup-go@v5
+        with:
+          go-version: '1.24.0'
+
+      - name: Build CLI
+        run: go build -o hello-jira . 
+
+      - name: Run CLI
+        env:
+          TZ: 'Asia/Ho_Chi_Minh'  # ensures local time if CLI uses system time
+
+          JIRA_URL: {{ secrets.JIRA_URL }}
+          JIRA_EMAIL: {{ secrets.JIRA_EMAIL }}
+          JIRA_API_TOKEN: {{ secrets.JIRA_API_TOKEN }}
+
+          ICAL_URL: {{ secrets.ICAL_URL }}
+
+          GROOMING_ID: {{ secrets.GROOMING_ID }}
+          PLANNING_ID: {{ secrets.PLANNING_ID }}
+          REVIEW_ID: {{ secrets.REVIEW_ID }}
+          DAILY_ID: {{ secrets.DAILY_ID }}
+        run: ./hello-jira
