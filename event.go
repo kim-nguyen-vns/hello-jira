@@ -16,7 +16,7 @@ const (
 	EventTypeUnknown  EventType = "unknown"
 	EventTypePlanning EventType = "planning"
 	EventTypeDaily    EventType = "daily"
-	EventTypeGrooming EventType = "grooming"
+	EventTypeGrooming EventType = "refinement"
 	EventTypeReview   EventType = "review"
 )
 
